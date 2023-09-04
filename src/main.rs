@@ -35,7 +35,7 @@ use bevy_asset::AssetPathId;
 use noise::core::perlin::perlin_3d;
 
 const RENDER_DISTANCE: f32 = 2.;
-const CAM_MOVE_SPEED: f32 = 10.;
+const CAM_MOVE_SPEED: f32 = 3000.;
 const PERLIN_OCTAVE_2_MOD: f64 = 2.;
 const PERLIN_FULL_MOD: f64 = 0.001;
 const CHUNK_SIZE: i32 = 16;
@@ -747,7 +747,7 @@ fn main()
         .add_systems(OnEnter(AppState::Generating), task_generation)
         .add_systems(Update, handle_tasks)
         .add_systems(Update, fly_cam)
-        .add_systems(Update, task_updating)
+        .add_systems(Update, task_updating.run_if(in_state(AppState::Generating)))
         .run();
 
 }
